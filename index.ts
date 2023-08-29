@@ -79,9 +79,12 @@ function quickestPath(board: { ladders: [number, number][]; snakes: [number, num
     const diceRolls: number[] = [];
 
     while (true) {
+        // Set biggest leap posible to 6
         let biggestLeapDestination: number = 6 + currentPosition;
         let rollToTake: number = 6;
+        // Is safespot true if there is a place where no ladder or snake.
         let isSafeSpot: boolean = false;
+        // If the posible roll is exceed board cap.  
         if (biggestLeapDestination >= 100) {
             diceRolls.push(100 - currentPosition)
             currentPosition = 100;
@@ -92,9 +95,11 @@ function quickestPath(board: { ladders: [number, number][]; snakes: [number, num
         }
 
         for (let pos = currentPosition + 6; pos > currentPosition; pos--) {
+            // if ladder founed
             if (laddersMap.has(pos) && laddersMap.get(pos)! > biggestLeapDestination) {
                 biggestLeapDestination = laddersMap.get(pos)!;
                 rollToTake = pos - currentPosition
+                // if snake douned
             } else if (snakesMap.has(pos) && !isSafeSpot) {
                 biggestLeapDestination -= 1;
                 rollToTake = pos - currentPosition - 1;
